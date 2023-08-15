@@ -1,4 +1,4 @@
-module decode_stags_simple (
+module decode_stage_simple (
 	input               clk          ,
 	input               srst         ,
 	//from fetch_reg
