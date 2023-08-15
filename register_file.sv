@@ -15,14 +15,14 @@ logic[31:0][31:0] memory;
 
 initial begin
 //lw instr
-memory[0]  ='0;
-memory[5]  ='d5;// example 1 x5
-memory[9] ='h8;//x9
+// memory[0]  ='0;
+// memory[5]  ='d5;// example 1 x5
+// memory[9] ='h8;//x9
 
 end
 
 
-always @(posedge clk) begin : proc_regiter_files
+always @(negedge clk) begin : proc_regiter_files
 	if(WE3)
 		memory[A3] <= WD3 ;
 	end
