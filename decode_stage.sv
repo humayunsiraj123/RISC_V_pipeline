@@ -1,6 +1,7 @@
 module decode_stage (
 	input               clk          ,
 	input               srst         ,
+	input               flush_e      ,
 	//from fetch_reg
 	input        [31:0] instr_d      ,
 	input        [31:0] pc_d         ,
@@ -23,19 +24,24 @@ module decode_stage (
 	//datapath sigs
 	output logic [31:0] rs1_e        ,
 	output logic [31:0] rs2_e        ,
-	output logic [31:0] rd_e         ,
+	output logic [31:0] rd1_e        ,
+	output logic [31:0] rd2_e        ,
+	output logic [ 4:0] rd_e         ,
 	output logic [31:0] imm_ext_e    ,
 );
 
 // internal reg and wires
-	logic       jump_d       ;
-	logic       branch_d     ;
-	logic [1:0] result_src_d ;
-	logic       mem_write_d  ;
-	logic       alu_src_d    ;
-	logic [1:0] imm_src_d    ;
-	logic       reg_write_d  ;
-	logic [2:0] alu_control_d;
+
+	logic [31:0] rd1_d        ;
+	logic [31:0] rd2_d        ;
+	logic        jump_d       ;
+	logic        branch_d     ;
+	logic [ 1:0] result_src_d ;
+	logic        mem_write_d  ;
+	logic        alu_src_d    ;
+	logic [ 1:0] imm_src_d    ;
+	logic        reg_write_d  ;
+	logic [ 2:0] alu_control_d;
 	//datapath sigs
 	logic [31:0] rs1_d    ;
 	logic [31:0] rs2_d    ;
@@ -89,8 +95,8 @@ module decode_stage (
 		.A3  (rd_w       ),
 		.WD3 (result_w   ),
 		.WE3 (reg_write_w),
-		.RD1 (RD1        ),
-		.RD2 (RD2        )
+		.RD1 (rd1_d      ),
+		.RD2 (rd2_d      )
 	);
 
 
@@ -137,6 +143,10 @@ module decode_stage (
 			rs2_e         <= rs2_d         ;
 			rd_e          <= rd_d          ;
 			imm_ext_e     <= imm_ext_d     ;
+			//reg_file out
+			rd1_e         <= rd1_d;
+			rd2_e         <= rd2_d;
+
 		end
 	end
 
