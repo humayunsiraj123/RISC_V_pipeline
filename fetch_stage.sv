@@ -1,4 +1,4 @@
-module fetch_cycle(
+module fetch_stage(
 	input clk,
 	input srst,
 	input stall_f,
