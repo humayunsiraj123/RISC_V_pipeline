@@ -85,6 +85,9 @@ module decode_stage_simple (
 	);
 
 
+// decode _stage register
+
+
 
 
 
