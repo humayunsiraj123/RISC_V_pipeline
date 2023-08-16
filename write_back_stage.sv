@@ -3,7 +3,7 @@ module write_back_stage (
 	input              srst        ,
 	//control unit write_back stage
 	input logic              reg_write_w ,
-	input logic              result_src_w,
+	input logic      [1:0]        result_src_w,
 	// execute stage reg
 	input logic [ 4:0] rd_w        ,
 	input logic [31:0] read_data_w ,

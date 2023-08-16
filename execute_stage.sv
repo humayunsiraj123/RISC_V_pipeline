@@ -14,7 +14,7 @@ module execute_stage (
 	//from write back stage
 	input        [31:0] result_w     ,
 	//from memory stage
-	input        [31:0] alu_result_m ,
+	//input        [31:0] alu_result_m ,
 	// control unit sig from decode reg
 	input  logic        reg_write_e  ,
 	input  logic [ 1:0] result_src_e ,
@@ -61,10 +61,10 @@ module execute_stage (
 
 
 	logic zero_e;
-	logic  pc_src,
+	logic  pc_src;
 
 
-		logic [2:0] alu_cntrl;
+	logic [2:0] alu_cntrl;
 	logic [31:0] result;
 
 	logic [31:0] srcAE   ;
@@ -72,10 +72,10 @@ module execute_stage (
 	logic [31:0] to_srcBE;
 
 	logic [31:0] write_data_e;
-	logic [31:0] alu_result_e,
+	logic [31:0] alu_result_e;
 // out srcAE
 
-	mux_3to1 i_mux_3to1 (
+	mux_3to1 i_mux_3to1_1 (
 		.in1(rd1_e       ),
 		.in2(result_w    ),
 		.in3(alu_result_m),
@@ -83,7 +83,7 @@ module execute_stage (
 		.out(srcAE       )
 	);
 // selection of  write_data_e to select src_BE
-	mux_3to1 i_mux_3to1 (
+	mux_3to1 i_mux_3to1_2 (
 		.in1(rd2_e       ),
 		.in2(result_w    ),
 		.in3(alu_result_m),
@@ -151,4 +151,4 @@ module execute_stage (
 
 
 
-endmodule : decode_stage
+endmodule : execute_stage
