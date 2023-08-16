@@ -22,12 +22,12 @@ module decode_stage (
 	output logic        reg_write_e  ,
 	output logic [ 2:0] alu_control_e,
 	//datapath sigs
-	output logic [31:0] rs1_e        ,
-	output logic [31:0] rs2_e        ,
+	output logic [ 4:0] rs1_e        ,
+	output logic [ 4:0] rs2_e        ,
 	output logic [31:0] rd1_e        ,
 	output logic [31:0] rd2_e        ,
 	output logic [ 4:0] rd_e         ,
-	output logic [31:0] imm_ext_e    ,
+	output logic [31:0] imm_ext_e    
 );
 
 // internal reg and wires
@@ -45,12 +45,12 @@ module decode_stage (
 	//datapath sigs
 	logic [31:0] rs1_d    ;
 	logic [31:0] rs2_d    ;
-	logic [31:0] rd_d     ;
+	logic [ 4:0] rd_d     ;
 	logic [31:0] imm_ext_d;
 
 
 	logic zero = 0;
-	logic  pc_src,
+	logic  pc_src;
 
 // controller unit
 	control_unit i_control_unit (

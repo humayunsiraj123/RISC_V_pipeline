@@ -5,8 +5,8 @@ module execute_stage (
 	input        [31:0] pc_e         ,
 	input        [31:0] pc_plus4_e   ,
 	//datapath infrom decode_reg
-	input  logic [31:0] rs1_e        ,
-	input  logic [31:0] rs2_e        ,
+	input  logic [ 4:0] rs1_e        ,
+	input  logic [ 4:0] rs2_e        ,
 	input  logic [31:0] rd1_e        ,
 	input  logic [31:0] rd2_e        ,
 	input  logic [ 4:0] rd_e         ,

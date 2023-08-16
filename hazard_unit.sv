@@ -15,7 +15,7 @@ module hazard_unit (
 	output logic       flush_d     ,
 	output logic       flush_e     ,
 	output logic [1:0] forwardAE   ,
-	output logic [1:0] forwardBE   ,
+	output logic [1:0] forwardBE
 );
 
 	logic lw_stall = 0;
@@ -31,18 +31,18 @@ module hazard_unit (
 			forwardAE = 'b10;
 		else if(((rs1_e==rd_w) && reg_write_w) & (rs1_e!==0))
 			forwardAE = 'b10;
-	end
-	forwardAE ='b00;
+		else
+			forwardAE = 'b00;
 //foor scrB
-	if(((rs2_e==rd_m) && reg_write_m) & (rs2_e!==0))
-		forwardBE ='b10;
-	else if(((rs2_e==rd_w) && reg_write_w) & (rs2_e!==0))
-		forwardBE ='b10;
-	end
-	forwardBE ='b00;
+		if(((rs2_e==rd_m) && reg_write_m) & (rs2_e!==0))
+			forwardBE = 'b10;
+		else if(((rs2_e==rd_w) && reg_write_w) & (rs2_e!==0))
+			forwardBE = 'b10;
+		else
+			forwardBE = 'b00;
 //flush two instruction branch
-	flush_d =pcsrc_e;
-	flush_e =flush_d
+		flush_d = pcsrc_e;
+		flush_e = flush_d;
 
-
+		end
 	endmodule

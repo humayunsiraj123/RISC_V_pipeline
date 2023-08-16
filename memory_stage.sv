@@ -7,7 +7,7 @@ module memory_stage (
 	input  logic [31:0] write_data_m,
 	input  logic [31:0] pc_plus4_m  ,
 	//control unit memory stage
-	input  logic        reg_write_m
+	input  logic        reg_write_m ,
 	input  logic [ 1:0] result_src_m,
 	input  logic        mem_write_m ,
 	//write back memory stage reg
@@ -21,7 +21,7 @@ module memory_stage (
 );
 
 
-	logic [31:0] read_write_m;//
+	logic [31:0] read_write_m; //
 
 
 // data_memory
@@ -44,7 +44,7 @@ module memory_stage (
 			pc_plus4_w   <= 0;
 			rd_w         <= 0;
 			alu_result_w <= 0;
-			write_data_w <= 0;
+			read_data_w <=0;
 			//control unit io
 			result_src_w <= 0;
 			reg_write_w  <= 0;
@@ -53,7 +53,7 @@ module memory_stage (
 			pc_plus4_w   <= pc_plus4_m;
 			rd_w         <= rd_m;
 			alu_result_w <= alu_result_m;
-			write_data_w <= write_data_m;
+			read_data_w  <= read_write_m;
 			//control unit //controe
 			result_src_w <= result_src_m;
 			reg_write_w  <= reg_write_m;
