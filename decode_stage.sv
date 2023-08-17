@@ -24,6 +24,8 @@ module decode_stage (
 	//datapath sigs
 	output logic [ 4:0] rs1_e        ,
 	output logic [ 4:0] rs2_e        ,
+	output logic [ 4:0] rs1_d        ,
+	output logic [ 4:0] rs2_d        ,
 	output logic [31:0] rd1_e        ,
 	output logic [31:0] rd2_e        ,
 	output logic [ 4:0] rd_e         ,
@@ -43,8 +45,8 @@ module decode_stage (
 	logic        reg_write_d   = 0;
 	logic [ 2:0] alu_control_d = 0;
 	//datapath sigs
-	logic [4:0] rs1_d     = 0;
-	logic [4:0] rs2_d     = 0;
+	//logic [4:0] rs1_d     = 0;
+	//logic [4:0] rs2_d     = 0;
 	logic [ 4:0] rd_d      = 0;
 	logic [31:0] imm_ext_d = 0;
 
@@ -69,13 +71,13 @@ module decode_stage (
 
 
 
-	logic [ 4:0] A1 =0;
-	logic [ 4:0] A2 =0;
-	logic [ 4:0] A3 =0;
-	logic [31:0] WD3=0;
-	logic        WE3=0;
-	logic [31:0] RD1=0;
-	logic [31:0] RD2=0;
+	logic [ 4:0] A1  = 0;
+	logic [ 4:0] A2  = 0;
+	logic [ 4:0] A3  = 0;
+	logic [31:0] WD3 = 0;
+	logic        WE3 = 0;
+	logic [31:0] RD1 = 0;
+	logic [31:0] RD2 = 0;
 
 	always_comb begin : proc_
 		A1    = instr_d[19:15];
@@ -88,15 +90,15 @@ module decode_stage (
 
 
 	register_file i_register_file (
-		.clk (clk           ),
-		.srst(srst          ),
-		.A1  (rs1_d),
-		.A2  (rs2_d),
-		.A3  (rd_w          ),
-		.WD3 (result_w      ),
-		.WE3 (reg_write_w   ),
-		.RD1 (rd1_d         ),
-		.RD2 (rd2_d         )
+		.clk (clk        ),
+		.srst(srst       ),
+		.A1  (rs1_d      ),
+		.A2  (rs2_d      ),
+		.A3  (rd_w       ),
+		.WD3 (result_w   ),
+		.WE3 (reg_write_w),
+		.RD1 (rd1_d      ),
+		.RD2 (rd2_d      )
 	);
 
 
@@ -110,7 +112,7 @@ module decode_stage (
 
 // decode _stage register
 
-	always_ff @(posedge clk) begin : proc_decode_register
+	always_ff @(posedge clk) begin
 		if(srst || flush_e) begin
 			pc_e          <= 0;
 			pc_plus4_e    <= 0;
@@ -127,7 +129,8 @@ module decode_stage (
 			rs2_e         <= 0;
 			rd_e          <= 0;
 			imm_ext_e     <= 0;
-		end else begin
+		end
+		else begin
 			pc_e          <= pc_d          ;
 			pc_plus4_e    <= pc_plus4_d    ;
 			//control <=controd  unit io
@@ -144,8 +147,8 @@ module decode_stage (
 			rd_e          <= rd_d          ;
 			imm_ext_e     <= imm_ext_d     ;
 			//reg_file out
-			rd1_e         <= rd1_d;
-			rd2_e         <= rd2_d;
+			rd1_e         <= rd1_d		   ;
+			rd2_e         <= rd2_d		   ;
 
 		end
 	end

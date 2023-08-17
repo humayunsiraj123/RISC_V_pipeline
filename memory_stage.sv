@@ -21,7 +21,7 @@ module memory_stage (
 );
 
 
-	logic [31:0] read_write_m; //
+	logic [31:0] read_write_m=0; //
 
 
 // data_memory

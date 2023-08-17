@@ -15,7 +15,7 @@ logic[31:0][31:0] memory;
 
 initial begin
 //lw instr
-// memory[0]  ='0;
+memory[0]  ='0;
 // memory[5]  ='d5;// example 1 x5
 // memory[9] ='h8;//x9
 
@@ -27,7 +27,7 @@ always @(negedge clk) begin : proc_regiter_files
 		memory[A3] <= WD3 ;
 	end
 
-always @(*) begin : proc_RD_x
+always @(*) begin 
 RD2 = srst ? 0: memory[A2];
 RD1 = srst ? 0: memory[A1];
 end
