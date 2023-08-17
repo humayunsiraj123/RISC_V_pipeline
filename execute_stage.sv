@@ -43,36 +43,36 @@ module execute_stage (
 
 // internal reg and wires
 
-	logic [31:0] rd1_d        ;
-	logic [31:0] rd2_d        ;
-	logic        jump_d       ;
-	logic        branch_d     ;
-	logic [ 1:0] result_src_d ;
-	logic        mem_write_d  ;
-	logic        alu_src_d    ;
-	logic [ 1:0] imm_src_d    ;
-	logic        reg_write_d  ;
-	logic [ 2:0] alu_control_d;
+	logic [31:0] rd1_d        =0;
+	logic [31:0] rd2_d        =0;
+	logic        jump_d       =0;
+	logic        branch_d     =0;
+	logic [ 1:0] result_src_d =0;
+	logic        mem_write_d  =0;
+	logic        alu_src_d    =0;
+	logic [ 1:0] imm_src_d    =0;
+	logic        reg_write_d  =0;
+	logic [ 2:0] alu_control_d=0;
 	//datapath sigs
-	logic [31:0] rs1_d    ;
-	logic [31:0] rs2_d    ;
-	logic [31:0] rd_d     ;
-	logic [31:0] imm_ext_d;
+	logic [31:0] rs1_d    =0;
+	logic [31:0] rs2_d    =0;
+	logic [31:0] rd_d     =0;
+	logic [31:0] imm_ext_d=0;
 
 
-	logic zero_e;
-	logic  pc_src;
+	logic zero_e=0;
+	logic  pc_src=0;
 
 
-	logic [2:0] alu_cntrl;
-	logic [31:0] result;
+	logic [2:0] alu_cntrl=0;
+	logic [31:0] result=0;
 
-	logic [31:0] srcAE   ;
-	logic [31:0] srcBE   ;
-	logic [31:0] to_srcBE;
+	logic [31:0] srcAE   =0;
+	logic [31:0] srcBE   =0;
+	logic [31:0] to_srcBE=0;
 
-	logic [31:0] write_data_e;
-	logic [31:0] alu_result_e;
+	logic [31:0] write_data_e=0;
+	logic [31:0] alu_result_e=0;
 // out srcAE
 
 	mux_3to1 i_mux_3to1_1 (

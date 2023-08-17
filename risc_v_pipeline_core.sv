@@ -3,14 +3,30 @@ module risc_v_pipeline_core (
   input srst
 );
 
-  logic stall_f;
-  logic pcsrc_e;
-  logic stall_d;
-  logic flush_d;
-  logic [31:0] pc_target_e;
-  logic [31:0] instr_d;
-  logic [31:0] pc_d;
-  logic [31:0] pc_plus4_d;
+typedef enum logic[6:0] {
+    LW     = 7'b0000011,
+    SW     = 7'b0100011,
+    BEQ    = 7'b1100011,
+    I_TYPE = 7'b0010011,//itype instruction
+    R_TYPE = 7'b0110011,
+    JAL    = 7'b1101111} instr_e;
+    instr_e instr_name;
+    instr_e instr_type;
+
+    always_comb begin : proc_
+      $cast(instr_type,instr_d[6:0]);
+    
+    end
+
+
+  logic stall_f=1;
+  logic pcsrc_e=0;
+  logic stall_d=1;
+  logic flush_d=0;
+  logic [31:0] pc_target_e=0;
+  logic [31:0] instr_d=0;
+  logic [31:0] pc_d=0;
+  logic [31:0] pc_plus4_d=0;
 fetch_stage i_fetch_stage (
   .clk        (clk        ),
   .srst       (srst       ),
@@ -25,25 +41,25 @@ fetch_stage i_fetch_stage (
 );
 
 
-  logic flush_e;
-  logic reg_write_w;
-  logic [4:0] rd_w;
-  logic [31:0] result_w;
-  logic [31:0] pc_e;
-  logic [31:0] pc_plus4_e;
-  logic jump_e;
-  logic branch_e;
-  logic [1:0] result_src_e;
-  logic mem_write_e;
-  logic alu_src_e;
-  logic reg_write_e;
-  logic [2:0] alu_control_e;
-  logic [4:0] rs1_e;
-  logic [4:0] rs2_e;
-  logic [31:0] rd1_e;
-  logic [31:0] rd2_e;
-  logic [4:0] rd_e;
-  logic [31:0] imm_ext_e;
+  logic flush_e=0;
+  logic reg_write_w=0;
+  logic [4:0] rd_w=0;
+  logic [31:0] result_w=0;
+  logic [31:0] pc_e=0;
+  logic [31:0] pc_plus4_e=0;
+  logic jump_e=0;
+  logic branch_e=0;
+  logic [1:0] result_src_e=0;
+  logic mem_write_e=0;
+  logic alu_src_e=0;
+  logic reg_write_e=0;
+  logic [2:0] alu_control_e=0;
+  logic [4:0] rs1_e=0;
+  logic [4:0] rs2_e=0;
+  logic [31:0] rd1_e=0;
+  logic [31:0] rd2_e=0;
+  logic [4:0] rd_e=0;
+  logic [31:0] imm_ext_e=0;
 decode_stage i_decode_stage (
   .clk          (clk          ),
   .srst         (srst         ),
@@ -71,17 +87,17 @@ decode_stage i_decode_stage (
   .imm_ext_e    (imm_ext_e    )
 );
 
-  logic [1:0] forwardAE;
-  logic [1:0] forwardBE;
-  logic res_src_e;
-  logic pc_src_e;
-  logic [31:0] pc_plus4_m;
-  logic [4:0] rd_m;
-  logic [31:0] alu_result_m;
-  logic [31:0] write_data_m;
-  logic [1:0] result_src_m;
-  logic mem_write_m;
-  logic reg_write_m;
+  logic [1:0] forwardAE=0;
+  logic [1:0] forwardBE=0;
+  logic res_src_e=0;
+  logic pc_src_e=0;
+  logic [31:0] pc_plus4_m=0;
+  logic [4:0] rd_m=0;
+  logic [31:0] alu_result_m=0;
+  logic [31:0] write_data_m=0;
+  logic [1:0] result_src_m=0;
+  logic mem_write_m=0;
+  logic reg_write_m=0;
 execute_stage i_execute_stage (
   .clk          (clk          ),
   .srst         (srst         ),
@@ -104,7 +120,7 @@ execute_stage i_execute_stage (
   .forwardAE    (forwardAE    ),
   .forwardBE    (forwardBE    ),
   .res_src_e    (res_src_e    ),
-  .pc_src_e     (pc_src_e     ),
+  .pc_src_e     (pcsrc_e     ),
   .pc_target_e  (pc_target_e  ),
   .pc_plus4_m   (pc_plus4_m   ),
   .rd_m         (rd_m         ),
@@ -115,10 +131,10 @@ execute_stage i_execute_stage (
   .reg_write_m  (reg_write_m  )
 );
 
-  logic [31:0] read_data_w;
-  logic [31:0] alu_result_w;
-  logic [31:0] pc_plus4_w;
-  logic [1:0] result_src_w;
+  logic [31:0] read_data_w=0;
+  logic [31:0] alu_result_w=0;
+  logic [31:0] pc_plus4_w=0;
+  logic [1:0] result_src_w=0;
 memory_stage i_memory_stage (
   .clk         (clk         ),
   .srst        (srst        ),
@@ -153,8 +169,8 @@ write_back_stage i_write_back_stage (
 );
 
 
-  logic [4:0] rs1_d;
-  logic [4:0] rs2_d;
+  logic [4:0] rs1_d=0;
+  logic [4:0] rs2_d=0;
 hazard_unit i_hazard_unit (
   .rs1_d       (rs1_d       ),
   .rs2_d       (rs2_d       ),

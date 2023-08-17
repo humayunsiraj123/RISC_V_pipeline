@@ -27,30 +27,30 @@ module decode_stage (
 	output logic [31:0] rd1_e        ,
 	output logic [31:0] rd2_e        ,
 	output logic [ 4:0] rd_e         ,
-	output logic [31:0] imm_ext_e    
+	output logic [31:0] imm_ext_e
 );
 
 // internal reg and wires
 
-	logic [31:0] rd1_d        ;
-	logic [31:0] rd2_d        ;
-	logic        jump_d       ;
-	logic        branch_d     ;
-	logic [ 1:0] result_src_d ;
-	logic        mem_write_d  ;
-	logic        alu_src_d    ;
-	logic [ 1:0] imm_src_d    ;
-	logic        reg_write_d  ;
-	logic [ 2:0] alu_control_d;
+	logic [31:0] rd1_d         = 0;
+	logic [31:0] rd2_d         = 0;
+	logic        jump_d        = 0;
+	logic        branch_d      = 0;
+	logic [ 1:0] result_src_d  = 0;
+	logic        mem_write_d   = 0;
+	logic        alu_src_d     = 0;
+	logic [ 1:0] imm_src_d     = 0;
+	logic        reg_write_d   = 0;
+	logic [ 2:0] alu_control_d = 0;
 	//datapath sigs
-	logic [31:0] rs1_d    ;
-	logic [31:0] rs2_d    ;
-	logic [ 4:0] rd_d     ;
-	logic [31:0] imm_ext_d;
+	logic [4:0] rs1_d     = 0;
+	logic [4:0] rs2_d     = 0;
+	logic [ 4:0] rd_d      = 0;
+	logic [31:0] imm_ext_d = 0;
 
 
-	logic zero = 0;
-	logic  pc_src;
+	logic zero   = 0;
+	logic pc_src = 0;
 
 // controller unit
 	control_unit i_control_unit (
@@ -69,40 +69,40 @@ module decode_stage (
 
 
 
-	logic [ 4:0] A1 ;
-	logic [ 4:0] A2 ;
-	logic [ 4:0] A3 ;
-	logic [31:0] WD3;
-	logic        WE3;
-	logic [31:0] RD1;
-	logic [31:0] RD2;
+	logic [ 4:0] A1 =0;
+	logic [ 4:0] A2 =0;
+	logic [ 4:0] A3 =0;
+	logic [31:0] WD3=0;
+	logic        WE3=0;
+	logic [31:0] RD1=0;
+	logic [31:0] RD2=0;
 
 	always_comb begin : proc_
 		A1    = instr_d[19:15];
 		A2    = instr_d[24:20];
-		rs1_d = A1 ;//instr_d[19:15];
-		rs2_d = A2 ;
+		rs1_d = instr_d[19:15];//instr_d[19:15];
+		rs2_d = instr_d[24:20];
 		rd_d  = instr_d[11:7];
 	end
 
 
 
 	register_file i_register_file (
-		.clk (clk        ),
-		.srst(srst       ),
-		.A1  (A1         ),
-		.A2  (A2         ),
-		.A3  (rd_w       ),
-		.WD3 (result_w   ),
-		.WE3 (reg_write_w),
-		.RD1 (rd1_d      ),
-		.RD2 (rd2_d      )
+		.clk (clk           ),
+		.srst(srst          ),
+		.A1  (rs1_d),
+		.A2  (rs2_d),
+		.A3  (rd_w          ),
+		.WD3 (result_w      ),
+		.WE3 (reg_write_w   ),
+		.RD1 (rd1_d         ),
+		.RD2 (rd2_d         )
 	);
 
 
 //	immediate sign extend
 	extend i_extend (
-		.imm    (imm_ext_d),
+		.imm    (instr_d  ),
 		.imm_src(imm_src_d),
 		.imm_ext(imm_ext_d)
 	);

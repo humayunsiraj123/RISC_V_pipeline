@@ -12,10 +12,10 @@ module fetch_stage (
 );
 
 
-  logic [31:0] pc_in     ; //input to pc_reg
-  logic [31:0] instr_f   ;
-  logic [31:0] pc_f      ;
-  logic [31:0] pc_plus4_f;
+  logic [31:0] pc_in     = 0; //input to pc_reg
+  logic [31:0] instr_f   = 0;
+  logic [31:0] pc_f      = 0;
+  logic [31:0] pc_plus4_f= 0;
 
 // mux to selection pc_in value
   mux_2to1 i_mux_2to1 (
@@ -30,8 +30,8 @@ module fetch_stage (
     pc_plus4_f = pc_f + 4;
   end
 
-  logic        enable ;
-  logic [31:0] pc_next;
+  logic        enable =0;
+  logic [31:0] pc_next=0;
 
 //pc reg
   pc_reg i_pc_reg (
@@ -54,7 +54,7 @@ module fetch_stage (
       pc_plus4_d <= 0;
       pc_d       <= 0;
       instr_d    <= 0;
-    end else if(!stall_d) begin
+    end else if(stall_d==0) begin
       pc_plus4_d <= pc_plus4_f ;
       pc_d       <= pc_f ;
       instr_d    <= instr_f ;

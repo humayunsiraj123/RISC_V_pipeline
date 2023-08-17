@@ -19,7 +19,7 @@ module tb_risc_core ();
 
 
 
-	always #10 clk =~clk;
+	always #50 clk =~clk;
 
 	initial begin
 		$dumpfile("dump.vcd");
