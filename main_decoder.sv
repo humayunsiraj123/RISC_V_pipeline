@@ -18,7 +18,11 @@ module main_decoder (
     BEQ    = 7'b1100011,
     I_TYPE = 7'b0010011,//itype instruction
     R_TYPE = 7'b0110011,
-    JAL    = 7'b1101111} instr_e;
+    JAL    = 7'b1101111,
+    U_TYPE = 7'b0110111,
+    JALR   = 7'b1100111,
+    AUIPC  = 7'b0010111,
+    LUI    = 7'b0110111 } instr_e;
 
   logic [10:0] decode_res;
   assign {reg_w,imm_src,alu_src,mem_w,result_src,branch,alu_op,jump} = decode_res;
@@ -32,6 +36,7 @@ module main_decoder (
       BEQ     : decode_res = 11'b010_0000_1010;//11'b010_00xx_1010 
       I_TYPE  : decode_res = 11'b100_1000_0100;//11'b100_1000_0100 
       JAL     : decode_res = 11'b111_0010_0001;//11'b111_x010_0xx1 
+      U_TYPE  : decode_res = 11'b111_0010_0001;
       default : decode_res = 0;
     endcase
 

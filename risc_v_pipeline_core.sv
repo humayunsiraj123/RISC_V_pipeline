@@ -10,6 +10,40 @@ module risc_v_pipeline_core (
     I_TYPE = 7'b0010011,//itype instruction
     R_TYPE = 7'b0110011,
     JAL    = 7'b1101111} instr_e;
+
+    typedef enum logic [4:0]{x0=0,
+      x1  = 1,
+      x2  = 2,
+      x3  = 3,
+      x4  = 4,
+      x5  = 5,
+      x6  = 6,
+      x7  = 7,
+      x8  = 8,
+      x9  = 9,
+      x10 = 10,
+      x11 = 11,
+      x12 = 12,
+      x13 = 13,
+      x14 = 14,
+      x15 = 15,
+      x16 = 16,
+      x17 = 17,
+      x18 = 18,
+      x19 = 19,
+      x20 = 20,
+      x21 = 21,
+      x22 = 22,
+      x23 = 23,
+      x24 = 24,
+      x25 = 25,
+      x26 = 26,
+      x27 = 27,
+      x28 = 28,
+      x29 = 29,
+      x30 = 30,
+      x31 = 31}reg_no;
+
   instr_e instr_name;
   instr_e instr_type;
 
@@ -26,6 +60,7 @@ module risc_v_pipeline_core (
 
   fetch_stage i_fetch_stage (
     .clk        (clk        ),
+
     .srst       (srst       ),
     .stall_f    (stall_f    ),
     .pcsrc_e    (pcsrc_e    ),
